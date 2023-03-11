@@ -1,6 +1,8 @@
 import unittest
 import random
 from ft_map import ft_map
+from ft_filter import ft_filter
+from ft_reduce import ft_reduce
 
 def square(x):
     return x * x
@@ -11,15 +13,30 @@ def pow(x, y):
 def plus_one(x : chr):
         return ord(x) + 1
 
-class Test_ft_map(unittest.TestCase):
+def is_even(x : int):
+    return x % 2 == 0
+
+def is_odd(x : int):
+    return x % 2 == 1
+
+def is_even_chr(x : chr):
+    return ord(x) % 2 == 0
+
+def is_odd_chr(x : chr):
+    return ord(x) % 2 == 1
+
+def is_space_chr(x : chr):
+    return ord(x) == 32
+
+class basement(unittest.TestCase):
     test_max = 1000
     input_string = "Hello World! Hello Python Module! 0123456789"
     input_range = range(test_max)
     input_list = [random.randint(0, 1000) for i in range(test_max)]
     input_dict = {i: random.randint(0, 1000) for i in range(test_max)}
-
     test_not_iterable = int(42)
 
+class Test_ft_map(basement):
     def test_map_not_iterable(self):
         self.assertEqual(ft_map(square, self.test_not_iterable), None)
         # in subject, it's said that ft_map should return None if iterables is not iterable
@@ -55,7 +72,52 @@ class Test_ft_map(unittest.TestCase):
         self.assertEqual(list(map(lambda x: pow(x, 4), self.input_dict)), list(ft_map(lambda x: pow(x, 4), self.input_dict)))
 
        
+class Test_ft_filter(basement):
+    def test_filter_not_iterable(self):
+        self.assertEqual(ft_filter(square, self.test_not_iterable), None)
+        # in subject, it's said that ft_filter should return None if iterables is not iterable
 
+    def test_filter_string_00(self):
+        self.assertEqual(list(filter(lambda x: is_even_chr(x), self.input_string)), \
+                         list(ft_filter(lambda x: is_even_chr(x), self.input_string)))
+        
+    def test_filter_string_01(self):
+        self.assertEqual(list(filter(lambda x: is_odd_chr(x), self.input_string)), \
+                         list(ft_filter(lambda x: is_odd_chr(x), self.input_string)))
+        
+    def test_filter_string_02(self):
+        self.assertEqual(list(filter(lambda x: is_space_chr(x), self.input_string)), \
+                         list(ft_filter(lambda x: is_space_chr(x), self.input_string)))
+        
+    def test_filter_range_00(self):
+        self.assertEqual(list(filter(lambda x: is_even(x), self.input_range)), \
+                         list(ft_filter(lambda x: is_even(x), self.input_range)))
+        
+    def test_filter_range_01(self):
+        self.assertEqual(list(filter(lambda x: is_odd(x), self.input_range)), \
+                         list(ft_filter(lambda x: is_odd(x), self.input_range)))
+        
+    def test_filter_list_00(self):
+        self.assertEqual(list(filter(lambda x: is_even(x), self.input_list)), \
+                         list(ft_filter(lambda x: is_even(x), self.input_list)))
+        
+    def test_filter_list_01(self):
+        self.assertEqual(list(filter(lambda x: is_odd(x), self.input_list)), \
+                         list(ft_filter(lambda x: is_odd(x), self.input_list)))
+        
+    def test_filter_dict_00(self):
+        self.assertEqual(list(filter(lambda x: is_even(x), self.input_dict)), \
+                         list(ft_filter(lambda x: is_even(x), self.input_dict)))
+        
+    def test_filter_dict_01(self):
+        self.assertEqual(list(filter(lambda x: is_odd(x), self.input_dict)), \
+                         list(ft_filter(lambda x: is_odd(x), self.input_dict)))
+        
+class Test_ft_reduce(basement):
+
+    def test_reduce_not_iterable(self):
+        self.assertEqual(ft_reduce(square, self.test_not_iterable), None)
+        # in subject, it's said that ft_reduce should return None if iterables is not iterable
 
 if __name__ == '__main__':
     unittest.main()
