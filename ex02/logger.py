@@ -1,7 +1,28 @@
 import time
 from random import randint
 import os
+
 #... your definition of log decorator...
+def log(func):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+
+        def make_timestamp(exec_time):
+            if exec_time < 0.001:
+                time_stamp = "0.000 ms"
+            elif exec_time < 1:
+                time_stamp =  f"{exec_time * 1000:.3f} ms"
+            else:
+                time_stamp =  f"{exec_time:.3f} s"
+            return "[ exec-time = " + time_stamp + " ]"
+        
+        time_stamp = make_timestamp(end - start)
+        mark = "cmaxime"
+        with open(os.path.join(os.path.dirname(__file__), "machine.log"), "a") as f:
+            f.write(f"({mark})Running: {func.__name__: <15} {time_stamp}\n")
+    return wrapper
 
 class CoffeeMachine():
     
@@ -38,5 +59,5 @@ if __name__ == "__main__":
     machine = CoffeeMachine()
     for i in range(0, 5):
         machine.make_coffee()
-        machine.make_coffee()
-        machine.add_water(70)
+    machine.make_coffee()
+    machine.add_water(70)
