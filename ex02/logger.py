@@ -10,13 +10,14 @@ def log(func):
         end = time.time()
 
         def make_timestamp(exec_time):
-            if exec_time < 0.001:
+            if exec_time < 0.000:
                 time_stamp = "0.000 ms"
             elif exec_time < 1:
                 time_stamp =  f"{exec_time * 1000:.3f} ms"
             else:
                 time_stamp =  f"{exec_time:.3f} s"
-            return "[ exec-time = " + time_stamp + " ]"
+            time_stamp_prefix = "exec-time"
+            return f"[ {time_stamp_prefix} = {time_stamp} ]"
         
         time_stamp = make_timestamp(end - start)
         mark = "cmaxime"
