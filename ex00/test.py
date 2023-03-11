@@ -3,6 +3,7 @@ import random
 from ft_map import ft_map
 from ft_filter import ft_filter
 from ft_reduce import ft_reduce
+from functools import reduce
 
 def square(x):
     return x * x
@@ -114,10 +115,22 @@ class Test_ft_filter(basement):
                          list(ft_filter(lambda x: is_odd(x), self.input_dict)))
         
 class Test_ft_reduce(basement):
-
     def test_reduce_not_iterable(self):
-        self.assertEqual(ft_reduce(square, self.test_not_iterable), None)
+        # self.assertEqual(ft_reduce(square, self.test_not_iterable), None)
+        self.assertEqual(ft_reduce(square, self.test_not_iterable, 0), None)
         # in subject, it's said that ft_reduce should return None if iterables is not iterable
+
+    def test_reduce_string_00(self):
+        self.assertEqual(reduce(lambda x, y: x + ord(y), self.input_string, 0), ft_reduce(lambda x, y: x + ord(y), self.input_string, 0))
+
+    def test_reduce_range_00(self):
+        self.assertEqual(reduce(lambda x, y: x + y, self.input_range, 0), ft_reduce(lambda x, y: x + y, self.input_range, 0))
+
+    def test_reduce_list_00(self):
+        self.assertEqual(reduce(lambda x, y: x + y, self.input_list, 0), ft_reduce(lambda x, y: x + y, self.input_list, 0))
+
+    def test_reduce_dict_00(self):
+        self.assertEqual(reduce(lambda x, y: x + y, self.input_dict, 0), ft_reduce(lambda x, y: x + y, self.input_dict, 0))
 
 if __name__ == '__main__':
     unittest.main()
