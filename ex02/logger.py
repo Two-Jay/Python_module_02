@@ -21,11 +21,10 @@ def log(func):
         time_stamp = make_timestamp(end - start)
         mark = "cmaxime"
         with open(os.path.join(os.path.dirname(__file__), "machine.log"), "a") as f:
-            f.write(f"({mark})Running: {func.__name__: <15} {time_stamp}\n")
+            f.write(f"({mark})Running: {func.__name__: <20} {time_stamp}\n")
     return wrapper
 
 class CoffeeMachine():
-    
     water_level = 100
 
     @log
@@ -34,7 +33,7 @@ class CoffeeMachine():
             return True
         else:
             print("Please add water!")
-            return True
+            return False
     
     @log
     def boil_water(self):
@@ -43,7 +42,7 @@ class CoffeeMachine():
     @log
     def make_coffee(self):
         if self.start_machine():
-            for _ in range(20):
+            for i in range(0, 20):
                 time.sleep(0.1)
                 self.water_level -= 1
             print(self.boil_water())
@@ -57,7 +56,8 @@ class CoffeeMachine():
 
 if __name__ == "__main__":
     machine = CoffeeMachine()
-    for i in range(0, 5):
+    for i in range(0, 10):
         machine.make_coffee()
+
     machine.make_coffee()
     machine.add_water(70)
