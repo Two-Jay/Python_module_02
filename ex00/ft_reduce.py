@@ -7,5 +7,5 @@ def ft_reduce(function_to_apply, iterables, initial=None):
     else:
         value = initial
     for i in iter:
-        value = function_to_apply(value, i)
+        value += function_to_apply(value, i)
     return value
