@@ -1,21 +1,69 @@
 class CsvReader():
+    fp = None
+    
     def __init__(self, filename=None, sep=',', header=False, skip_top=0, skip_bottom=0):
-        pass
+        self.filename = filename
+        self.sep = sep
+        self.header = header
+        self.skip_top = skip_top
+        self.skip_bottom = skip_bottom
 
     def __enter__(self):
-        pass
+        try:
+            self.fp = open(self.filename, 'r')
+        except:
+            return None
+        print("file opened")
+        return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        pass
+        if self.fp:
+            self.fp.close()
+        print("file closed")
 
     def getdata(self):
-        pass
+        data_length = 0
+        for i in range(self.skip_top):
+            self.fp.readline()
+        try:
+            ret = []
+            for line in range(self.skip_bottom):
+                l = line.rstrip('\n').split(self.sep)
+                if data_length == 0:
+                    data_length = len(l)
+                elif data_length != len(l):
+                    raise Exception("CsvReader : line length is not consistent")
+                ret.append(l)
+            return ret
+        except:
+            return None
 
     def getheader(self):
-        pass
+        if self.header:
+            self.fp.seek(0)
+            return self.fp.readline().rstrip('\n').split(self.sep)
+        return None
 
+def pretty_liner(func):
+    def wrapper(*args, **kwargs):
+        print(f"---- instructions {kwargs.get('keyword')} start here ----")
+        func(*args, **kwargs)
+        print(f"---- instructions {kwargs.get('keyword')} end here ----")
+    return wrapper
+
+@pretty_liner
+def read_csv(filepath, keyword=None):
+    with CsvReader(filepath) as file:
+        if file:
+            print(file.getheader())
+            print(file.getdata())
+        else:
+            print("error while opening file")
 
 def main():
+    folder_path = "./csv"
+    read_csv(folder_path + "data.csv", keyword="good")
+    read_csv(folder_path + "bad.csv", keyword="bad")
     return 0
 
 if __name__ == "__main__":
