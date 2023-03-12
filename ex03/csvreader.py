@@ -45,7 +45,8 @@ class CsvReader():
         if self.header:
             self.fp.seek(0)
             return self.fp.readline().rstrip('\n').split(self.sep)
-        return None
+        else:
+            return None
 
 def pretty_liner(func):
     def wrapper(*args, **kwargs):
@@ -59,6 +60,7 @@ def read_csv(filepath, keyword=None, sep=',', header=False, skip_top=0, skip_bot
     with CsvReader(filepath, sep, header, skip_top, skip_bottom) as file:
         print(f"file: {filepath}")
         if file:
+            print(f"header: {file.getheader()}")
             print(file.getdata())
         else:
             print("error while opening file")
@@ -70,6 +72,7 @@ def main():
     read_csv(folder_path + "data.csv", keyword="skip_bottom", skip_bottom=80)
     read_csv(folder_path + "bad.csv", keyword="bad")
     read_csv(folder_path + "bad_length.csv", keyword="bad_length")
+    read_csv(folder_path + "good.csv", keyword="header", header=True)
     return 0
 
 if __name__ == "__main__":
