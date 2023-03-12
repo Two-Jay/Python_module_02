@@ -3,6 +3,10 @@ import argparse
 
 def csv_generator():
     fake = faker.Faker()
+    flag = False
+    if parse_args().header == True and flag == False:
+        yield f"id,name,email,phone_number"
+        flag = True
     for i in range(100):
         yield f"{i},{fake.name()},{fake.email()},{fake.phone_number()}\n"
 
@@ -13,7 +17,9 @@ def main(file):
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-f', '--file', type=str, default='data.csv', help='file to write to')
+    folder_path = "./csv/"
+    parser.add_argument('-f', '--file', type=str, default=folder_path + 'data.csv', help='file to write to')
+    parser.add_argument('-h', '--header', type=bool, default=False, help='file to write to')
     return parser.parse_args()
 
 if __name__ == '__main__':

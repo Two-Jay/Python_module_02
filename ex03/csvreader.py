@@ -22,20 +22,23 @@ class CsvReader():
         print("file closed")
 
     def getdata(self):
-        data_length = 0
-        for i in range(self.skip_top):
-            self.fp.readline()
         try:
             ret = []
-            for line in range(self.skip_bottom):
-                l = line.rstrip('\n').split(self.sep)
-                if data_length == 0:
-                    data_length = len(l)
-                elif data_length != len(l):
-                    raise Exception("CsvReader : line length is not consistent")
-                ret.append(l)
-            return ret
-        except:
+            data_length = 0
+            line_length = 0
+            for line in self.fp:
+                data_length += 1
+                if data_length == 1 and self.header:
+                    continue
+                if data_length > self.skip_top:
+                    l = line.rstrip('\n').split(self.sep)
+                    line_length = len(l) if not line_length else line_length
+                    if len(l) != line_length:
+                        raise Exception("line length mismatch")
+                    ret.append(l)
+            return ret[:len(ret) - self.skip_bottom]
+        except Exception as e:
+            print(e)
             return None
 
     def getheader(self):
@@ -52,18 +55,21 @@ def pretty_liner(func):
     return wrapper
 
 @pretty_liner
-def read_csv(filepath, keyword=None):
-    with CsvReader(filepath) as file:
+def read_csv(filepath, keyword=None, sep=',', header=False, skip_top=0, skip_bottom=0):
+    with CsvReader(filepath, sep, header, skip_top, skip_bottom) as file:
+        print(f"file: {filepath}")
         if file:
-            print(file.getheader())
             print(file.getdata())
         else:
             print("error while opening file")
 
 def main():
-    folder_path = "./csv"
+    folder_path = "./csv/"
     read_csv(folder_path + "data.csv", keyword="good")
+    read_csv(folder_path + "data.csv", keyword="skip_top", skip_top=80)
+    read_csv(folder_path + "data.csv", keyword="skip_bottom", skip_bottom=80)
     read_csv(folder_path + "bad.csv", keyword="bad")
+    read_csv(folder_path + "bad_length.csv", keyword="bad_length")
     return 0
 
 if __name__ == "__main__":
