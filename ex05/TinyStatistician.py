@@ -64,4 +64,3 @@ if __name__ == "__main__":
     print(f"quartile: {tstat.quartile(a)}")
     print(f"variance: {tstat.var(a)}")
     print(f"standard deviation: {tstat.std(a)}")
-
