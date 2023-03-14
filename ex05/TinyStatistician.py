@@ -28,6 +28,7 @@ class TinyStatistician():
             median_index = m // 2
             return (sorted_x[median_index] + sorted_x[median_index + 1]) / 2
 
+    # get the 1st and 3rd quartile
     def quartile(self, x : list) -> list:
         if isinstance(x, list) == False:
             return None
@@ -35,13 +36,8 @@ class TinyStatistician():
         if m == 0:
             return None
         sorted_x = sorted(x)
-        # if m % 2 == 1:
-        #     median_index = (m + 1) // 2
-        #     return [self.median(sorted_x[:median_index]), self.median(sorted_x), self.median(sorted_x[median_index:])]
-        # else:
-        #     median_index = m // 2
-        #     return [self.median(sorted_x[:median_index]), self.median(sorted_x), self.median(sorted_x[median_index:])]
-        return None
+        median_index = m // 2
+        return [sorted_x[median_index // 2], sorted_x[median_index + median_index // 2]]
         
     def var(self, x : list) -> float:
         if isinstance(x, list) == False:
