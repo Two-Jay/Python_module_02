@@ -1,43 +1,29 @@
 import math
+import statistics as st
 
 class TinyStatistician():
     def __init__(self) -> None:
         pass
 
     def mean(self, x : list) -> float:
-        if isinstance(x, list) == False:
+        if isinstance(x, list) == False or len(x) == 0:
             return None
-        m = len(x) if isinstance(x, list) == True else 0
-        if m == 0:
-            return None
-        ret = float(0)
-        for i in x:
-            ret += i
-        return ret / m
+        return float(st.mean(x))
 
     def median(self, x : list) -> float:
         if isinstance(x, list) == False:
             return None
-        sorted_x = sorted(x)
         m = len(x) if isinstance(x, list) == True else 0
         if m == 0:
             return None
-        elif m % 2 == 1:
-            return sorted_x[(m + 1) // 2]
-        else:
-            median_index = m // 2
-            return (sorted_x[median_index] + sorted_x[median_index + 1]) / 2
+        return st.median(x)
 
     # get the 1st and 3rd quartile
     def quartile(self, x : list) -> list:
-        if isinstance(x, list) == False:
+        if isinstance(x, list) == False or len(x) == 0:
             return None
-        m = len(x) if isinstance(x, list) == True else 0
-        if m == 0:
-            return None
-        sorted_x = sorted(x)
-        median_index = m // 2
-        return [sorted_x[median_index // 2], sorted_x[median_index + median_index // 2]]
+        quantiles = st.quantiles(sorted(x), n=4)
+        return [quantiles[0], quantiles[2]]
         
     def var(self, x : list) -> float:
         if isinstance(x, list) == False:

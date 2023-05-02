@@ -72,7 +72,7 @@ class Test_ft_map(basement):
     def test_map_dict_02(self):
         self.assertEqual(list(map(lambda x: pow(x, 4), self.input_dict)), list(ft_map(lambda x: pow(x, 4), self.input_dict)))
 
-       
+
 class Test_ft_filter(basement):
     def test_filter_not_iterable(self):
         self.assertEqual(ft_filter(square, self.test_not_iterable), None)
@@ -80,39 +80,39 @@ class Test_ft_filter(basement):
 
     def test_filter_string_00(self):
         self.assertEqual(list(filter(lambda x: is_even_chr(x), self.input_string)), \
-                         list(ft_filter(lambda x: is_even_chr(x), self.input_string)))
+            list(ft_filter(lambda x: is_even_chr(x), self.input_string)))
         
     def test_filter_string_01(self):
         self.assertEqual(list(filter(lambda x: is_odd_chr(x), self.input_string)), \
-                         list(ft_filter(lambda x: is_odd_chr(x), self.input_string)))
+            list(ft_filter(lambda x: is_odd_chr(x), self.input_string)))
         
     def test_filter_string_02(self):
         self.assertEqual(list(filter(lambda x: is_space_chr(x), self.input_string)), \
-                         list(ft_filter(lambda x: is_space_chr(x), self.input_string)))
+            list(ft_filter(lambda x: is_space_chr(x), self.input_string)))
         
     def test_filter_range_00(self):
         self.assertEqual(list(filter(lambda x: is_even(x), self.input_range)), \
-                         list(ft_filter(lambda x: is_even(x), self.input_range)))
+            list(ft_filter(lambda x: is_even(x), self.input_range)))
         
     def test_filter_range_01(self):
         self.assertEqual(list(filter(lambda x: is_odd(x), self.input_range)), \
-                         list(ft_filter(lambda x: is_odd(x), self.input_range)))
+            list(ft_filter(lambda x: is_odd(x), self.input_range)))
         
     def test_filter_list_00(self):
         self.assertEqual(list(filter(lambda x: is_even(x), self.input_list)), \
-                         list(ft_filter(lambda x: is_even(x), self.input_list)))
+            list(ft_filter(lambda x: is_even(x), self.input_list)))
         
     def test_filter_list_01(self):
         self.assertEqual(list(filter(lambda x: is_odd(x), self.input_list)), \
-                         list(ft_filter(lambda x: is_odd(x), self.input_list)))
+            list(ft_filter(lambda x: is_odd(x), self.input_list)))
         
     def test_filter_dict_00(self):
         self.assertEqual(list(filter(lambda x: is_even(x), self.input_dict)), \
-                         list(ft_filter(lambda x: is_even(x), self.input_dict)))
+            list(ft_filter(lambda x: is_even(x), self.input_dict)))
         
     def test_filter_dict_01(self):
         self.assertEqual(list(filter(lambda x: is_odd(x), self.input_dict)), \
-                         list(ft_filter(lambda x: is_odd(x), self.input_dict)))
+            list(ft_filter(lambda x: is_odd(x), self.input_dict)))
         
 class Test_ft_reduce(basement):
     def test_reduce_not_iterable(self):
